@@ -33,7 +33,7 @@ jobs:
       - name: Set environment variables
         run: |
           echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
-          echo "PORT=3020" >> $GITHUB_ENV
+          echo "PORT=3000" >> $GITHUB_ENV
 
       - name: Run tests
         run: npm test
