@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: API de Postagens
+  version: 1.0.0
+  description: |
+    API para gerenciamento de postagens em blog acadêmico, com suporte a:
+    - Criação
+    - Leitura (com busca por palavra-chave)
+    - Atualização
+    - Remoção
+
+servers:
+  - url: http://localhost:3020
+
+paths:
+  /posts:
+    get:
+      summary: Lista todos os posts (com filtro opcional)
+      tags: [Posts]
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: Termo de busca no título ou conteúdo
+      responses:
+        '200':
+          description: Lista de posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+    post:
+      summary: Cria um novo post
+      tags: [Posts]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPost'
+      responses:
+        '201':
+          description: Post criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+  /posts/search:
+    get:
+      summary: Busca posts pelo título ou conteúdo
+      tags: [Posts]
+      parameters:
+        - in: query
+          name: term
+          schema:
+            type: string
+          required: true
+          description: Termo de busca (sensível à capitalização)
+      responses:
+        '200':
+          description: Lista de posts encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+
+  /posts/{id}:
+    get:
+      summary: Busca um post pelo ID
+      tags: [Posts]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do post
+      responses:
+        '200':
+          description: Post encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: Post não encontrado
+
+    put:
+      summary: Atualiza um post existente
+      tags: [Posts]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPost'
+      responses:
+        '200':
+          description: Post atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: Post não encontrado
+
+    delete:
+      summary: Remove um post
+      tags: [Posts]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID do post
+      responses:
+        '204':
+          description: Post removido com sucesso
+        '404':
+          description: Post não encontrado
+        '500':
+          description: Erro interno do servidor
+
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 64f0e6f8c0e2a2d1f5e6a3b7
+        title:
+          type: string
+          example: Meu post incrível
+        content:
+          type: string
+          example: Este é o conteúdo do post.
+        author:
+          type: string
+          example: Cadu
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-08-08T12:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-08-08T13:00:00Z
+
+    NewPost:
+      type: object
+      required:
+        - title
+        - content
+        - author
+      properties:
+        title:
+          type: string
+          example: Novo post
+        content:
+          type: string
+          example: Conteúdo do post
+        author:
+          type: string
+          example: João

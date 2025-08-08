@@ -1,0 +1,42 @@
+# Node.js
+node_modules/
+.env
+.env.test
+dist/
+build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cobertura de testes
+coverage/
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Editor/IDE
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Sistema operacional
+Thumbs.db
+ehthumbs.db
+
+# CI/CD
+# Arquivos temporários que o GitHub Actions ou Docker podem gerar (dependendo do seu uso)
+*.tgz
+*.pid
+
+# Docker (se estiver usando build local)
+*.local
+docker-compose.override.yml
+
+# Jest cache
+jest-cache/
+jest-output/
+
+bkp
