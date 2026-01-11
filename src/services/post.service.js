@@ -39,10 +39,10 @@ const deletePost = async (id) => {
   if (!deleted) throw new Error('Post não encontrado');
 };
 
-// GET /posts/search?term=
+
 const searchPosts = async (term) => {
   if (!term) throw new Error('Informe o termo de busca');
-  const regex = new RegExp(term, 'i'); // Case insensitive
+  const regex = new RegExp(term, 'i'); 
   return await Post.find({
     $or: [
       { title: regex },
