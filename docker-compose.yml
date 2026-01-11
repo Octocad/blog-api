@@ -7,6 +7,8 @@ services:
     environment:
       - MONGO_URI=${MONGO_URI}
       - JWT_SECRET=${JWT_SECRET}
+      - FRONT_URLS=${FRONT_URLS:-http://localhost:8002}
+      - PORT=${PORT:-3000}
     env_file:
       - .env
     ports:
